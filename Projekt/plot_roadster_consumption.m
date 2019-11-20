@@ -1,4 +1,4 @@
 load roadster.mat
-plot(speed_kmph, consumption_Whpkm)
+scatter(speed_kmph, consumption_Whpkm, 'r')
 xlabel('Speed (km/h)')
 ylabel('Consumption (Wh/km)')
