@@ -9,20 +9,12 @@ function index = findPos(vector, val)
 index = 2;
 
 if isempty(vector) || val < vector(1) || val > vector(length(vector))
-    %index = -1;
-    %disp('findPos: No such value');
     throw(MException('component:IllegalArgumentException', ...
                      '%d is not in interval [%d, %d]', ...
                      val, vector(1), vector(length(vector))));
-    %return
 end
 
 while vector(index) < val
-%     if index == length(vector)
-%         index = -1;
-%         %disp('findPos: No such value');
-%         return
-%     end
     if vector(index) > vector(index + 1)
         throw(MException('component:IllegalArgumentException', ...
                          'vector is not ordered ascending: At indices %d, %d', ...
