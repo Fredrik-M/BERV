@@ -4,6 +4,11 @@
 
 function E = tot_consumption(x, model, route, n)
 
+if n <= 0
+    throw(MException('component:IllegalArgumentException', ...
+                     'n must be > 0'));
+end
+
 if mod(n, 2)
     n = n + 1;
 end
