@@ -2,7 +2,7 @@
 % equal to val, unless val == vector(1), in which case 2 is returned.
 % Returns -1 if val is greater than or smaller than all components of vector.
 % PRE: vector must be non-empty and ordered ascending.
-% PRE: val must be in the interval [vector(1), vector(n)]
+% PRE: 
  
 function index = findPos(vector, val)
 
@@ -25,8 +25,7 @@ while vector(index) < val
 %     end
     if vector(index) > vector(index + 1)
         throw(MException('component:IllegalArgumentException', ...
-                         'vector is not ordered ascending: At indices %d, %d', ...
-                         index, index + 1));
+                         'vector is not ordered ascending: At index %d', index));
     end
     index = index + 1;
 end

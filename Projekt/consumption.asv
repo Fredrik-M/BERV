@@ -4,12 +4,9 @@
 
 function c = consumption(s, model)
 
-for i = 1:length(s)
-    if s(i) <= 0
-        throw(MException('component:IllegalArgumentException', ...
-                         'Non-positive value of %d at index %d of argument vector', s(i), i));
-    end
-end
+for x = s
+    if x <= 0
+        throw(MException(
 
 sData = load(model, 'speed_kmph').speed_kmph;
 cData = load(model, 'consumption_Whpkm').consumption_Whpkm;

@@ -7,11 +7,22 @@ dData = load(route, 'distance_km').distance_km;
 sData = load(route, 'speed_kmph').speed_kmph;
 
 s = zeros(1, length(d));
+D = [ones(length(d), 1) d'];
 
 for i = 1:length(d)
     pos = findPos(dData, d(i));
     c = myLinInterpol([dData(pos - 1) dData(pos)], ...
                       [sData(pos - 1) sData(pos)])';
     
-    s(i) = [1, d(i)] * c;
+    s(i) = D
+    %c(i, 2) = dData(pos);
+    %y(i, 1) = sData(pos - 1);
+    %y(i, 2) = sData(pos);
 end
+
+%x = [dData(i_0) dData(i_1)];
+%y = [sData(i_0) sData(i_1)];
+
+%c = myLinInterpol(x, y);
+
+s = [ones(length(d), 1), d'] * C;
