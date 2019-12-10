@@ -1,0 +1,12 @@
+function res = batteryEmpty(charge, model, route)
+
+N = 100
+
+%distance_vec = load(route, 'distance_km').distance_km;
+%route_length = distance_vec(length(distance_vec));
+%avg_consumption = tot_consumption(1, model, route, N) / route_length;
+
+R = range(1, model, route, charge, N);
+
+E = @(x)(tot_consumption(x, model, route, 100));
+res = fzero(@(x)(E(x)-c), R); 
