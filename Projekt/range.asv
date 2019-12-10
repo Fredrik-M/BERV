@@ -9,9 +9,6 @@ remaining_charge = charge - total_consumption;
 
 if remaining_charge <= 0
     disp('Warning: Battery is empty')
-    r = 0;
-    return;
-end
-
+    retu
 r = remaining_charge/average_consumption;
 end
