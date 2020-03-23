@@ -1,6 +1,6 @@
 %Given a model, route and initial charge, computes the point at which the battery is depleted.
 
-function res = batteryEmpty(charge, model, route)
+function res = battery_empty(charge, model, route)
 
 N = 100;
 
