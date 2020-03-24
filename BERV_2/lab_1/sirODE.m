@@ -1,11 +1,13 @@
-function ddt = sirODE(t,y)
-N = 1000;
-mu = 2e-3 / 365;
-beta = 0.3;
-v = 1 / 7;
+function ddt = sirODE(t,y,params)
+% lambda - Birth rate
+% mu - Death rate
+% beta - Infection rate
+% gamma - Recovery rate
+% y - [S(t-1);I(t-1);R(t-1)]
 
-ddt = zeros(2,1);
-ddt(1) = mu * (N - y(1)) - beta * y(2) / N * y(1);
-ddt(2) = beta * y(2) / N * y(1) - v * y(2) - mu * y(2);
-ddt(3) = v * y(2) - mu * y(3);
+ddt = zeros(3,1);
+F = params.beta * y(2);
+ddt(1) = params.lambda - params.mu * y(1) - F * y(1);
+ddt(2) = F * y(1) - (params.gamma + params.mu) * y(2);
+ddt(3) = params.gamma * y(2) - params.mu * y(3);
 end
