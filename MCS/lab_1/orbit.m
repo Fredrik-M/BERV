@@ -1,6 +1,6 @@
-% orbit :: f(x), [x0_0, ..., x0_m], N -> [[x0_0; ...; f^N(x0_0)], ..., [x0_m; ...; f^N(x0_m)]]
+% orbit :: f, [x0_0, ..., x0_m], N -> [[x0_0; ...; f^N(x0_0)], ..., [x0_m; ...; f^N(x0_m)]]
 % Where f^k(x) = f(f(...f(x))) is f composed k times.
-% map :: f(x) :: [x0, ..., xm] -> [f(x0), ..., f(xm)]
+% map :: [x0, ..., xm] -> [f(x0), ..., f(xm)]
 % Returns a N * m matrix where column i is the first N elements in the
 % orbit of x0_i (starting from x0_i).
 

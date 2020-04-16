@@ -3,11 +3,11 @@
 
 mu = linspace(0, 4, 21);
 x  = linspace(0, 1, 101);
-n  = 2;
+n  = 10;
 
 % =======================================================================
 
-Omat = zeros(3, length(x), length(mu));
+Omat = zeros(n + 1, length(x), length(mu));
 for i = 1:length(mu)
     Omat(:,:,i) = orbit(@(x)logistic(x, mu(i)), x, n);
 end
