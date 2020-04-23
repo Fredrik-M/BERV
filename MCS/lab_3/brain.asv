@@ -1,0 +1,33 @@
+clear;
+
+N = 40;
+p = 0.3;
+
+steps = 0;
+
+% ===================================================================
+
+S = rand(N) < p;
+Sp = pad(S);
+
+pl = surface(Sp, 'EdgeColor','k');
+ax = gca;
+ax.YDir = 'reverse';
+ax.YTickLabel = {};
+ax.XTickLabel = {};
+xlim([1,N+1]);
+ylim([1,N+1]);
+
+while true
+    in = input('step', 's');
+    if in == 'q'
+        break
+    end
+
+    S  = step(S);
+    Sp = pad(S);
+end
+
+%fig = gcf;
+%fig.NextPlot = 'replaceChildren';
+%fig.KeyPressFcn = @f;
