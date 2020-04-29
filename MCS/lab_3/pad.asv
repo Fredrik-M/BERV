@@ -1,4 +1,0 @@
-function P = pad(M)
-    s = size(M);
-    P = [[M;zeros(1, length(M, 2))],zeros(1 + length(M, 1), 1)];
-end

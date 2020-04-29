@@ -1,0 +1,43 @@
+
+N = 100;
+
+T = 50;
+K = 50;
+M = 10;
+
+p0 = linspace(0.8, 0.1, 8);
+gamma = linspace(0.1, 0.8, 8);
+
+P = zeros(length(p0), length(gamma));
+e = zeros(length(p0), length(gamma));
+p = zeros(1, M);
+
+for i = 1:length(p0)
+    for j = 1:length(gamma)
+        for m = 1:M
+            s0 = rand(1, N) <= p0(i); 
+            d = 0;
+            for k = 1:K
+                s = s0;
+                for t = 1:T
+                    if ~any(s)
+                        d = d+1;
+                        break
+                    end
+                    s = step_lin(s, gamma(j));
+                end
+            end
+            p(m) = (K-d)/K;
+        end
+        P(i,j) = mean(p);
+        e(i,j) = 1.96 * std(p) / sqrt(M);
+    end
+end
+
+set(groot, 'DefaultTextInterpreter','latex', 'DefaultLegendInterpreter','latex');
+hold on
+surf(gamma, p0, P);
+title('Probability of epidemic');
+xlabel('$\gamma$');
+ylabel('$p_0$');
+zlabel('$P(E;\,\gamma;\,p_0)$');
