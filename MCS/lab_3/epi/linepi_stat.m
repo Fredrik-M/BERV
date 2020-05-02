@@ -1,3 +1,6 @@
+set(groot, 'DefaultTextInterpreter','latex', 'DefaultLegendInterpreter','latex');
+close all
+clear
 
 N = 100;
 
@@ -29,7 +32,6 @@ for i = 1:length(gamma)
     P(i,2) = 1.96 * std(p) / sqrt(M);
 end
 
-set(groot, 'DefaultTextInterpreter','latex', 'DefaultLegendInterpreter','latex');
 hold on
 plot(gamma, P(:,1));
 plot(gamma, P(:,1) - P(:,2), ':r');
