@@ -72,7 +72,7 @@ plot(t_r, y_r(:,1));
 title(sprintf('odeRal \n $\\lambda = %0.1f$, $h = %0.4f$', lambda, h));
 
 lambda = 100;
-h = 0.0062;
+h = 0.006;
 f = @(t, y)VdP_ODE(t, y, lambda);
 [t_r, y_r] = odeRal(f, tspan, y0, h);
 

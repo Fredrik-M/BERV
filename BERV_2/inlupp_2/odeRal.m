@@ -7,15 +7,19 @@
 % h                 :: step size
 
 function [t, y] = odeRal(f, tspan, y0, h)
-  n      = 1 + round((tspan(2) - tspan(1)) / h);
-  t      = linspace(tspan(1), tspan(2), n)';
-  h_     = t(2) - t(1)
+  %n      = 1 + round((tspan(2) - tspan(1)) / h);
+  %t      = linspace(tspan(1), tspan(2), n)';
+  %h_     = t(2) - t(1)
+  t = tspan(1):h:tspan(2);
+  if t(2) ~= tspan(2)
+      t = [t, tspan(2)];
+  end
   y      = zeros(length(t), length(y0));
   y(1,:) = y0;
   
   for i = 2:length(t)
       k1 = f(t(i-1), y(i-1,:))';
-      k2 = f(t(i-1) + 2/3 * h_, y(i-1,:) + 2/3 * h_ * k1)';
-      y(i,:) = y(i-1,:) + .25 * h_ * (k1 + 3 * k2);
+      k2 = f(t(i-1) + 2/3 * h, y(i-1,:) + 2/3 * h * k1)';
+      y(i,:) = y(i-1,:) + .25 * h * (k1 + 3 * k2);
   end
 end
