@@ -1,6 +1,5 @@
-% Solves the deterministic circadian clock model on t = [0, 400] using 
-% ode15s and plots solutions for A(t) and R(t). Also plots a comparison of 
-% step sizes using ode15s and ode45 on t = [0, 50].
+% Plots a comparison between deterministic and stochastic simulation of the
+% circadian clock model, using ode15s and SSA.
 
 % A  -- activator protein
 % R  -- repressor protein
@@ -24,6 +23,8 @@ clear;
 
 % parameters
 p = importdata('params.mat');
+% change delta_R for comparison of equilibrium behaviour
+p.delta_R = 0.05;
 
 % D_A, D_R, Dp_A, Dp_R, M_A, M_R, A, R, C
 y0 = [1, 1, zeros(1, 7)];
@@ -33,38 +34,25 @@ opts = odeset( ...
     'RelTol', 1e-3, ...
     'AbsTol', 1e-6 ...
     );
-% solve with ode15s
+% deterministic solution
 f = @(t, y)CO_ODE(t, y, p);
-[t, y] = ode15s(f, tspan, y0, opts);
+[td, yd] = ode15s(f, tspan, y0, opts);
 
-% plot A(t) and R(t)
+% stochastic solution. default time step 0.1
+[ts, ys] = SSA(@prop_CO, @stoch_CO, y0, tspan, p);
+
+% plot R(t)
 tiledlayout(2,1, 'TileSpacing','Compact');
 ax1 = nexttile();
-plot(t, y(:,7));
+plot(td, yd(:,8));
+title('Deterministic solution');
 ax2 = nexttile();
-plot(t, y(:,8));
+plot(ts, ys(:,8));
+title('Stochastic solution');
 
 xticklabels(ax1, {});
-ylabel(ax1, '$A(t)$');
+ax1.XLim = tspan;
+ax2.XLim = tspan;
+ylabel(ax1, '$R(t)$');
 ylabel(ax2, '$R(t)$');
-xlabel(ax2, '$t$');
-
-% solve with both ode15s and ode45 for step comparison
-tspan = [0, 50];
-[t45, y45]   = ode45(f, tspan, y0, opts);
-[t15s, y15s] = ode15s(f, tspan, y0, opts);
-
-% plot step sizes
-figure();
-tl = tiledlayout(2,1, 'TileSpacing','Compact');
-ax1 = nexttile();
-plot(t45(1:end-1), diff(t45));
-ax2 = nexttile();
-plot(t15s(1:end-1), diff(t15s));
-
-title(ax1, 'ode45');
-title(ax2, 'ode15s');
-xticklabels(ax1, {});
-ylabel(ax1, '$h(t)$');
-ylabel(ax2, '$h(t)$');
 xlabel(ax2, '$t$');
