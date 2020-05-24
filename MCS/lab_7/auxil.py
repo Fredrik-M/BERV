@@ -95,12 +95,12 @@ def get_percentile(scores, q):
 # A measure of genetic diversity in a set C of chromosomes
 def diversity(C):
 
-    n = C.shape[1]
+    (n,g) = C.shape
     s = 0
     for c in C:
         D = np.sum(C != c, 1)
-        s += np.mean(D) / (n * (n-1))
+        s += D.sum() / (g * (n-1))
 
-    return s / C.shape[0]
+    return s / n
     
 

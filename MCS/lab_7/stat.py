@@ -38,6 +38,11 @@ def stats(gens, scores, R_test):
     (fig, ax, wax) = make_wrapped_subplots(2, 1, sharex='all')
     ax[0].plot(np.arange(n_gens), mean_fit)
     ax[1].plot(np.arange(n_gens), div)
+    
+    (start, end)= ax[0].get_ylim()
+    ax[0].yaxis.set_ticks(np.arange(0, end, 0.1))
+    (start, end)= ax[1].get_ylim()
+    ax[1].yaxis.set_ticks(np.arange(0, end, 0.1))
     wax.set_xlabel('generation')
     ax[0].set_ylabel(r'$\bar{f}(C_n)$')
     ax[1].set_ylabel(r'$d(C_n)$')
