@@ -54,7 +54,7 @@ if __name__ == '__main__':
     cmm = np.mean(cm, 1)
 
 
-    # Plot mean proximity
+    # Plot mean proximity and clustering
     fig, ax = plt.subplots(2, 1, sharex=True)
     ax[0].scatter(etas, pmm)
     ax[1].scatter(etas, cmm)
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     psm = np.mean(p[4,:,:], 0)
     csm = np.mean(c[4,:,:], 0)
 
-    # Plot polatisation vs t for eta = 0.2
+    # Plot proximity and clustering vs t for eta = 0.2
     fig, ax = plt.subplots(2, 1, sharex=True)
     ax[0].plot(t, psm)
     ax[1].plot(t, csm)

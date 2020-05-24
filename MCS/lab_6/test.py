@@ -15,12 +15,12 @@ if __name__ == '__main__':
     steps = 150
     eta = 0.2
     
-    r = 0.15
+    r = 0.12
     r_attr = (2/3*r,r)
     r_align = (1/3*r,2/3*r)
     r_rep = (0,1/3*r) 
 
-    S = simulate(N, eta, r_attr, r_align, r_rep, steps)
+    #S = simulate(N, eta, r_attr, r_align, r_rep, steps)
 ##    c = np.zeros(steps+1)
 ##    for i in range(steps+1):
 ##        c[i] = (clustering(S[:,:,i], r))
@@ -30,18 +30,18 @@ if __name__ == '__main__':
 ##    fig1, ax1 = plt.subplots()
 ##    ax1.plot(t, c)
 
-    animate(S, path, 'ex_attr_align_rep_70.2.15')
+    #animate(S, path, 'ex_attr_align_rep_70.2.15')
 
-##    R = np.random.uniform(0, 1, (N, 3, 100))
-##    pr = np.zeros(100)
-##    cr = np.zeros(100)
-##
-##    for i in range(0, 100):
-##        pr[i] = proximity(R[:,:,i])
-##        cr[i] = clustering(R[:,:,i])
-##
-##    print('R mean proximity: ', np.mean(pr))
-##    print('R mean clustering: ', np.mean(cr))
+    R = np.random.uniform(0, 1, (N, 3, 100))
+    pr = np.zeros(100)
+    cr = np.zeros(100)
+
+    for i in range(0, 100):
+        pr[i] = proximity(R[:,:,i])
+        cr[i] = clustering(R[:,:,i])
+
+    print('R mean proximity: ', np.mean(pr))
+    print('R mean clustering: ', np.mean(cr))
     
 ##    cr = np.zeros(10)
 ##    rho = np.linspace(0.05, 0.3, 6)
