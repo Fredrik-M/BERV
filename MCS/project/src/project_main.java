@@ -16,33 +16,38 @@ import jmetal.metaheuristics.thetadea.ThetaDEA;
 import jmetal.metaheuristics.thetadea.ThetaDEA_ext;
 
 import jmetal.problems.CDTLZ.*;
+import jmetal.problems.ICDTLZ.*;
 import jmetal.qualityIndicator.*;
 
 
 public class project_main {
 
-    static final String PATH_ = "data/";
+    static final String PATH_ = "data_IC/";
 
     public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
-        Problem prob;
+		Problem problem;
+		Problem refProblem;
         int m = 5;
         int N = 20;
         
-        // CDTLZ2
-        prob = new CDTLZ2("Real", m + 9, m);
-        runComparison(prob, N);
+        // (I)CDTLZ2
+		problem = new ICDTLZ2("Real", m + 9, m);
+		refProblem = new CDTLZ2("Real", m + 9, m);
+        runComparison(problem, refProblem, N);
 
-        // CDTLZ3
-        prob = new CDTLZ3("Real", m + 9, m);
-        runComparison(prob, N);
+        // (I)CDTLZ3
+		problem = new ICDTLZ3("Real", m + 9, m);
+		refProblem = new CDTLZ3("Real", m + 9, m);
+        runComparison(problem, refProblem, N);
 
-        // CDTLZ4
-        prob = new CDTLZ4("Real", m + 9, m);
-        runComparison(prob, N);
+        // (I)CDTLZ4
+		problem = new ICDTLZ4("Real", m + 9, m);
+		refProblem = new CDTLZ4("Real", m + 9, m);
+        runComparison(problem, refProblem, N);
     }
 
 
-    static void runComparison(Problem prob, int N) throws JMException, IOException, ClassNotFoundException {
+    static void runComparison(Problem prob, Problem refProb, int N) throws JMException, IOException, ClassNotFoundException {
         Algorithm alg;
         LinkedList<SolutionSet> setList;
 
@@ -53,34 +58,48 @@ public class project_main {
         setList = new LinkedList<SolutionSet>();
         System.out.println("Running vanilla algorithm, " + prob.getName() + "...");
         for(int i = 0; i < N; i++) {
-            setList.add(alg.execute());
+			SolutionSet finalSet = alg.execute();
+			// set number of objectives to match reference problem
+			Iterator<Solution> it = finalSet.iterator();
+			while(it.hasNext()) {
+				Solution s = it.next();
+				s.setNumberOfObjectives(refProb.getNumberOfObjectives());
+			}
+
+            setList.add(finalSet);
         }
+		// use reference problem for QI for correct nr of objectives
+        writeStats(alg, refProb, setList, "PF_" + refProb.getName(), "vanilla");
 
-        writeStats(alg, setList, "vanilla");
-
-        // extended
-        alg = new ThetaDEA_ext(prob);
-        setup(alg, prob);
-
-        setList = new LinkedList<SolutionSet>();
+		// extended
+		alg = new ThetaDEA_ext(prob);
+		setup(alg, prob);
+		
+		setList = new LinkedList<SolutionSet>();
         System.out.println("Running extended algorithm, " + prob.getName() + "...");
         for(int i = 0; i < N; i++) {
-            setList.add(alg.execute());
-        }
+			SolutionSet finalSet = alg.execute();
+			Iterator<Solution> it = finalSet.iterator();
+			while(it.hasNext()) {
+				Solution s = it.next();
+				s.setNumberOfObjectives(refProb.getNumberOfObjectives());
+			}
 
-        writeStats(alg, setList, "extended");
+            setList.add(finalSet);
+        }
+        writeStats(alg, refProb, setList, "PF_" + refProb.getName(), "extended");
     }
 
 
-    static void writeStats(Algorithm alg, Iterable<SolutionSet> setList, String suffix) throws IOException {
+    static void writeStats(Algorithm alg, Problem prob, Iterable<SolutionSet> setList, String PF, String suffix) throws IOException {
         Iterator<SolutionSet> setIt = setList.iterator();
         Iterator<Solution> solIt;
 		String path;
 		String name = alg.getProblem().getName();
 
-		double [][]lambda = (double[][])alg.getReferencePoints();
-		writeSphericalPF(lambda, "PF_tmp");
-		QualityIndicator qi = new QualityIndicator(alg.getProblem(), "PF_tmp");
+		//double [][]lambda = (double[][])alg.getReferencePoints();
+		//riteSphericalPF(lambda, "PF_tmp");
+		QualityIndicator qi = new QualityIndicator(prob, PF);
 
 		String path_qi = PATH_ + name + "_qi_" + suffix;
 		FileOutputStream fos_qi = new FileOutputStream(path_qi);

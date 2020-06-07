@@ -1,0 +1,15 @@
+CDTLZ3, extended, 20 executions of 1000 generations
+
+IGD best: 0.0023214385031038345
+IGD median: 0.0028529651743523917
+IGD worst: 0.023070947016076378
+
+HV best: 0.6946409168911374
+HV median: 0.6924767634206991
+HV worst: 0.5035605227067527
+
+Avg median fitness: 1.816223497453023
+Avg constraint violation: 1.0797221946292463
+Avg best fitness: 1.0980122246172297
+Avg best constraint violation: 0.2197995892455349
+Avg constraint violation of best solution: 0.2370119942251571

@@ -22,7 +22,7 @@ public class CDTLZ4 extends Problem {
 		numberOfConstraints_ = 7;
 		problemName_ = "CDTLZ4";
 
-		if(numberOfVariables < 9) {
+		if(numberOfVariables < 12) {
 			System.out.println("Error: number of variables must be >= 12");
 			System.exit(-1);
 		}

@@ -1,0 +1,15 @@
+ICDTLZ4, vanilla, 20 executions of 1000 generations
+
+IGD best: 0.01604575338730916
+IGD median: 0.016339288229022746
+IGD worst: 0.0166044952247359
+
+HV best: 0.6234686318067506
+HV median: 0.6127367586924096
+HV worst: 0.6055226588367518
+
+Avg median fitness: 1.0074342850748033
+Avg constraint violation: 2.2608447238415383
+Avg best fitness: 0.5755860007978281
+Avg best constraint violation: 0.894575854016497
+Avg constraint violation of best solution: 1.9849371226902726

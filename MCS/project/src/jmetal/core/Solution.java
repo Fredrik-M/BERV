@@ -387,6 +387,10 @@ public class Solution implements Serializable {
 			return numberOfObjectives_;
 	}
 
+	public void setNumberOfObjectives(int n){
+		this.numberOfObjectives_ = n;
+	}
+
 	/**
 	 * Returns the number of decision variables of the solution.
 	 * 

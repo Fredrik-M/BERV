@@ -264,7 +264,7 @@ public class ThetaDEA extends Algorithm {
 		
 		problem_.evaluate(offSpring[0]);
 		// Added for comparison only, algorithm does not handle constraints
-		problem_.evaluateConstraints(offSpring[0]);
+		//problem_.evaluateConstraints(offSpring[0]);
 		
 		offspringPopulation_.add(offSpring[0]);
 	}

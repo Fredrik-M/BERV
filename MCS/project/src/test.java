@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
@@ -16,11 +17,11 @@ import jmetal.metaheuristics.thetadea.ThetaDEA;
 import jmetal.metaheuristics.thetadea.ThetaDEA_ext;
 
 import jmetal.problems.CDTLZ.*;
+import jmetal.problems.ICDTLZ.*;
 import jmetal.qualityIndicator.*;
 
 public class test {
 	public static void main(String args[]) throws JMException, ClassNotFoundException, IOException {
-		Problem problem;
 		Algorithm algorithm;
 		QualityIndicator qi;
 		double igd;
@@ -28,14 +29,22 @@ public class test {
 		double [][]lambda;
 
 		int m = 5;
-		problem = new CDTLZ3("Real", m + 9, m);
+		Problem problem = new ICDTLZ3("Real", m + 9, m);
+		Problem refProblem = new CDTLZ3("Real", m + 9, m);
+		
+		String pf = "PF_" + refProblem.getName() + "_test";
+		Algorithm refAlg = new ThetaDEA(refProblem);
+		setup(refAlg, refProblem);
+		refAlg.setInputParameter("maxGenerations", 1);
+		refAlg.execute();
+		lambda = (double[][])refAlg.getReferencePoints();
+		writeSphericalPF(lambda, pf);
 
-		String pf = "PF_CDTLZ3";
-
+		// Run vanilla
 		algorithm = new ThetaDEA(problem);
 		setup(algorithm, problem);
-		
-		// Run vanilla
+
+		System.out.println(problem.getName());
 		System.out.println("\nRunning vanilla algorithm...");
 		SolutionSet population = algorithm.execute();
 
@@ -43,9 +52,12 @@ public class test {
 		Stats.print(population);
 		population.printObjectivesToFile("vanilla");
 
-		lambda = (double[][])algorithm.getReferencePoints();
-		writeSphericalPF(lambda, pf);
-		qi = new QualityIndicator(problem, pf);
+		qi = new QualityIndicator(refProblem, pf);
+		Iterator<Solution> it = population.iterator();
+		while(it.hasNext()) {
+			Solution s = it.next();
+			s.setNumberOfObjectives(m);
+		}
 		igd = qi.getIGD(population);
 		hv = qi.getHypervolume(population);
 		System.out.printf("  IGD: %f\n", igd);
@@ -62,7 +74,11 @@ public class test {
 		Stats.print(population);
 		population.printObjectivesToFile("extended");
 
-		qi = new QualityIndicator(problem, pf);
+		it = population.iterator();
+		while(it.hasNext()) {
+			Solution s = it.next();
+			s.setNumberOfObjectives(m);
+		}
 		igd = qi.getIGD(population);
 		hv = qi.getHypervolume(population);
 		System.out.printf("  IGD: %f\n", igd);
@@ -75,7 +91,7 @@ public class test {
 		alg.setInputParameter("theta", 5.0);
 		alg.setInputParameter("div1", 6);
 		alg.setInputParameter("div2", 0);
-		alg.setInputParameter("maxGenerations", 1000);
+		alg.setInputParameter("maxGenerations", 500);
 		
 		HashMap parameters = new HashMap();
 		parameters.put("probability", 1.0);

@@ -174,12 +174,6 @@ public class ThetaRanking_ext implements Ranking {
 		
 		return d;
 	}
-
-
-	
-	
-
-	
 	
 	
 	void rank() {
